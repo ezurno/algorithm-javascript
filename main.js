@@ -7,7 +7,14 @@ let input = fs.readFileSync(filePath).toString().split("\n");
 
 let line = input[0].split(" ");
 
-let a = parseInt(line[0]);
-let b = parseInt(line[1]);
+let a = line[0];
+let b = line[1];
 
-console.log(a + b);
+b_1 = b[2]; // 각 자릿 수 값은 문자열의 특성을 이용해 쉽게 구현 가능
+b_10 = b[1];
+b_100 = b[0];
+
+console.log(Number(a) * Number(b_1));
+console.log(Number(a) * Number(b_10));
+console.log(Number(a) * Number(b_100));
+console.log(Number(a) * Number(b));
