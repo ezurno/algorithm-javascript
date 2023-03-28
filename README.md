@@ -196,3 +196,62 @@ fill() 함수를 사용해 배열을 간단하게 초기화 할 수 있다.
 	let x = 123.456;
 	console.log(x.toFixed(2)); // 소숫점 둘째자리까지 출력 => 123.45
 ```
+
+<br/>
+
+---
+
+###### 20230328
+
+> ## 4. fs-module 활용하기
+
+<br/>
+
+## fs-module 사용시 /dev/stdin 을 찾을 수 없다는 error 발생
+
+<br/>
+
+- `fs-module`으로 `/dev/stdin`에 접근을 할 수 없는 error.
+- **Mac, Linux**는 유닉스 기반 운영체제로, /dev/stdin 으로 인해 터미널 상에서 데이터값을 입력 할 수 있음
+- 하지만 **Window**운영체제는 불가능 하기 때문에 외부에 `input.txt` 파일을 만들어 따로 접근해야 한다.
+
+<br/>
+
+```JS
+const fs = require("fs");
+const filePath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
+// Mac, Linux 는 유닉스 기반이라 /dev/stdin 으로 인해 터미널 상에서 데이터값을 입력 할 수 있음
+// 하지만 window는 불가능하기 때문에 /input.txt 파일을 따로 만들어서 테스트 해주어야 함
+let input = fs.readFileSync(filePath).toString().split("\n");
+// fs-module 을 사용하여 입력값 받아오기
+let line = input[0].split(" ");
+let a = parseInt(line[0]);
+let b = parseInt(line[1]);
+console.log(a + b);
+```
+
+<br/>
+
+## 각자리 숫자 합을 곱하는 예제 풀이
+
+<br/>
+
+- [문제](https://www.acmicpc.net/problem/2588)
+- 각자리 숫자를 접근 할 시 문자열 값에 접근 하는 것이 제일 간단한 방법
+
+```JS
+/*-- 중략 --*/
+let a = line[0];
+let b = line[1];
+
+b_1 = b[2]; // 각 자릿 수 값은 문자열의 특성을 이용해 쉽게 구현 가능
+b_10 = b[1];
+b_100 = b[0];
+
+console.log(Number(a) * Number(b_1));
+console.log(Number(a) * Number(b_10));
+console.log(Number(a) * Number(b_100));
+console.log(Number(a) * Number(b));
+```
+
+<br/>
