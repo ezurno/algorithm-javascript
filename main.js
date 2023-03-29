@@ -7,14 +7,20 @@ let input = fs.readFileSync(filePath).toString().split("\n");
 
 let line = input[0].split(" ");
 
-let a = line[0];
-let b = line[1];
+let store = Number(line[0]);
 
-b_1 = b[2]; // 각 자릿 수 값은 문자열의 특성을 이용해 쉽게 구현 가능
-b_10 = b[1];
-b_100 = b[0];
+function calculator(store) {
+  if (90 <= store && store <= 100) {
+    return console.log("A");
+  } else if (80 <= store && store <= 89) {
+    return console.log("B");
+  } else if (70 <= store && store <= 79) {
+    return console.log("C");
+  } else if (60 <= store && store <= 69) {
+    return console.log("D");
+  } else {
+    return console.log("F");
+  }
+}
 
-console.log(Number(a) * Number(b_1));
-console.log(Number(a) * Number(b_10));
-console.log(Number(a) * Number(b_100));
-console.log(Number(a) * Number(b));
+calculator(store);
