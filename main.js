@@ -5,22 +5,14 @@ const filePath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
 let input = fs.readFileSync(filePath).toString().split("\n");
 // fs-module 을 사용하여 입력값 받아오기
 
-let line = input[0].split(" ");
+let hour = Number(input[0].split(" ")[0]);
+let minute = Number(input[0].split(" ")[1]);
 
-let store = Number(line[0]);
+if (minute < 45) {
+  hour -= 1;
+  minute += 15;
 
-function calculator(store) {
-  if (90 <= store && store <= 100) {
-    return console.log("A");
-  } else if (80 <= store && store <= 89) {
-    return console.log("B");
-  } else if (70 <= store && store <= 79) {
-    return console.log("C");
-  } else if (60 <= store && store <= 69) {
-    return console.log("D");
-  } else {
-    return console.log("F");
-  }
-}
+  if (hour < 0) hour = 23;
+} else minute -= 45;
 
-calculator(store);
+console.log(hour + " " + minute);
