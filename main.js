@@ -2,13 +2,13 @@ const fs = require("fs");
 const filePath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
 let input = fs.readFileSync(filePath).toString().split("\n");
 
-let number_1 = Number(input[0].split(" ")[0]);
-let number_2 = Number(input[0].split(" ")[1]);
-let number_3 = Number(input[0].split(" ")[2]);
+let number = Number(input[0].split(" ")[0]);
+// 문자열을 수로 변환 할때 일반적으로 parseInt 보다 Number가 더 빠르게 동작함
 
-if (number_1 == number_2 && number_2 == number_3)
-  console.log(10000 + number_1 * 1000);
-else if (number_1 == number_2) console.log(1000 + number_1 * 100);
-else if (number_1 == number_3) console.log(1000 + number_1 * 100);
-else if (number_2 == number_3) console.log(1000 + number_2 * 100);
-else console.log(Math.max(number_1, number_2, number_3) * 100);
+let sum = 0;
+
+while (0 < number) {
+  sum += number;
+  number -= 1;
+}
+console.log(sum);
