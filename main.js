@@ -3,25 +3,13 @@ const filePath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
 let input = fs.readFileSync(filePath).toString().split("\n");
 
 let cycle = Number(input[0]);
-let log = "";
+let array = input[1].split(" ").map(Number);
+let newArray = [];
 
-for (let i = 1; i <= cycle; i++) {
-  let array = input[i].split(" ").map(Number);
-  let array_length = array[0];
-  let sum = 0;
-  let counter = 0;
+let M = array.reduce((st, nd) => Math.max(st, nd));
 
-  for (let j = 1; j <= array_length; j++) {
-    sum += array[j];
-  }
-
-  avg = sum / array_length; // 평균 값
-
-  for (let i = 1; i <= array_length; i++) {
-    if (avg < array[i]) counter++;
-  }
-
-  log += `${((counter / array[0]) * 100).toFixed(3)}%\n`;
+for (let i = 0; i < cycle; i++) {
+  newArray.push((array[i] / M) * 100);
 }
 
-console.log(log);
+console.log(newArray.reduce((a, b) => a + b) / cycle);
