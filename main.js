@@ -2,12 +2,12 @@ const fs = require("fs");
 const filePath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
 let input = fs.readFileSync(filePath).toString().split("\n");
 
-let number = Number(input[0].split(" ")[0]);
-let log = "";
+let data = input.map((x) => Number(x));
+let max = Math.max(...data);
+// Math.max 함수로 값만 가져와 사용
 
-let array = input[1].split(" ").map((x) => Number(x));
+let index = data.indexOf(max) + 1;
+// indexOf 로 인덱스 위치 찾기
 
-let max = array.reduce((st, nd) => Math.max(st, nd));
-let min = array.reduce((st, nd) => Math.min(st, nd));
-
-console.log(`${min} ${max}`);
+console.log(max);
+console.log(index);
