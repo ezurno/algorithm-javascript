@@ -706,7 +706,7 @@ console.log("last key = " + lastKey);
 
 - 수정 이후 루트노드에서부터 하향식으로 `heapify()`를 진행 해주어야 한다
 - 자바스크립트에서 우선순위 큐를 라이브러리로 제공하지 않음
-- 최단경로 알고리즘 등에서 **힙(Heap)**이 필요한 경우 **별도라이브러리를 사용**해야한다. [참고](https://github.com/ndb796/priorityqueuejs)
+- 최단경로 알고리즘 등에서 **힙(Heap)** 이 필요한 경우 **별도라이브러리를 사용** 해야한다. [참고](https://github.com/ndb796/priorityqueuejs)
 
 <br/>
 
