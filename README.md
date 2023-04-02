@@ -308,7 +308,7 @@ console.log(Number(a) * Number(b));
 <hr/>
 <br/>
 
-## 배열 (Array)
+> ## 배열 (Array)
 
 <br/>
 
