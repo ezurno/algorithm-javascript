@@ -449,3 +449,46 @@ console.log(Number(a) * Number(b));
 	console.log(array.indexOf(6)); // 3
 	console.log(array.indexOf(8)); // -1 없으면 -1 반환
 ```
+
+<br/>
+<hr/>
+<br/>
+
+> ## 스택
+
+<br/>
+
+## 스택 (Array)
+
+<br/>
+
+- 먼저 들어온 데이터가 나중에 나가는 자료구조, **LIFO(Last-In-First-Out)**
+- 새 원소를 삭제할 때는 마지막 원소가 삭제 되는 형식
+
+| 연산              | 시간 복잡도 | 설명                                                   |
+| ----------------- | ----------- | ------------------------------------------------------ |
+| 삽입 (push)       | _O(1)_      | 스택에 원소를 삽입하는 연산                            |
+| 추출 (pop)        | _O(1)_      | 스택에 원소를 추출하는 연산                            |
+| 최상위 원소 (Top) | _O(1)_      | 스택에 최상위 원소(마지막에 들어온 원소) 확인하는 연산 |
+| Empty             | _O(1)_      | 스택이 비어있는지 확인 하는 연산                       |
+
+<br/>
+
+**일반적으로 스택을 구현할 때, 자바스크립트에선 배열(array) 자료형을 사용한다.**
+
+```JS
+	let stack = [];
+
+	stack.push(5);
+	stack.push(2);
+	stack.push(3);
+	stack.push(7);
+	stack.pop();
+	stack.push(1);
+	stack.push(4);
+	stack.pop();
+
+	let reversed = stack.slice().reverse(); // stack 을 잘라서 바열로 재생성 및 뒤집기
+	console.log(reversed); // [1,3,2,5]
+	console.log(stack); // [5,2,3,1]
+```
