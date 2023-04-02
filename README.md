@@ -454,7 +454,7 @@ console.log(Number(a) * Number(b));
 <hr/>
 <br/>
 
-> ## 스택
+> ## 스택과 큐
 
 <br/>
 
@@ -491,4 +491,61 @@ console.log(Number(a) * Number(b));
 	let reversed = stack.slice().reverse(); // stack 을 잘라서 바열로 재생성 및 뒤집기
 	console.log(reversed); // [1,3,2,5]
 	console.log(stack); // [5,2,3,1]
+```
+
+<br/>
+
+## 큐 (Queue)
+
+<br/>
+
+- 먼저 들어온 데이터가 먼저 나가는 자료구조, **FIFO(First-In-First-Out)**
+- 자바스크립트에서는 **Dictionary** 자료형을 사용하면 간단하게 구현 가능
+
+```JS
+// Queue class 생성
+	class Queue {
+		constructor() {
+			this.items = {}; // Dirctionary 자료형으로 보관
+			this.headIndex = 0;
+			this.tailInedex = 0;
+		}
+
+		enqueue(item) {
+			this.items[this.tailIndex] = item; // dictionary 에 key 와 value 값으로 값 저장
+			this.tailIndex++;
+		}
+
+		dequeue() {
+			let item = this.items[this.headIndex];
+			delete this.items[this.headIndex]; // dictionary 에 해당하는 key 값을 삭제
+			this.headIndex++;
+			return item;
+		}
+
+		peek() {
+			return this.items[this.headIndex];
+		}
+
+		getLength() {
+			return this.tailIndex - this.headIndex;
+		}
+	}
+
+	// 구현된 Queue class를 큐에 적용
+
+	queue = new Queue();
+
+	queue.enqueue(5);
+	queue.enqueue(2);
+	queue.enqueue(3);
+	queue.enqueue(7);
+	queue.dequeue();
+	queue.enqueue(1);
+	queue.enqueue(4);
+	queue.dequeue();
+
+	while(queue.getLength != 0) {
+		console.log(queue.dequeue()); // 3 7 1 4
+	}
 ```
