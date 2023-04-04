@@ -1043,3 +1043,47 @@ console.log("last key = " + lastKey);
 		}
 	}
 ```
+
+<br/>
+
+## 자바스크립트 정렬 라이브러리
+
+- 자바스크립트에서는 배열에 포함한 데이터를 정렬하는 `sort()` 함수를 제공한다.
+- 시간 복잡도 _O(logN)_ 을 보장함
+
+```JS
+	array.sort(compareFunction);
+	// compareFunction 은 정렬 기준을 정해주는 함수
+	/*
+		compareFunction
+		=>
+		두개 원소를 a, b 로 입력 받는다
+		1. 반환 값이 0보다 작은 경우 -> a 가 우선순위가 높아 앞에 위치
+		2. 반환 값이 0보다 큰 경우 => b 가 우선순위가 높아 앞에 위치
+		3. 반환 값이 0인 경우 => a와 b 의 순서를 변경하지 않음
+
+		4. compareFunction 을 정해주지 않으면 유니코드 기준으로 배열을 정렬함
+	*/
+```
+
+정수에 대하여 오름차순 정렬 하는 법
+
+<br/>
+
+```JS
+	let array = [1,8,5,9,21,3,7,2,15];
+
+	function compare_1(a, b) {
+		if (a < b) return -1;
+		else if (a > b) return 1;
+		else return 0;
+	} // or
+
+	function compare_2(a, b) {
+		return a - b;
+	} // compare_1 과 compare_2
+
+	array.sort(compare_1);
+
+	console.log(array); // 1,2,3,5,7,8,9,15,21
+```
