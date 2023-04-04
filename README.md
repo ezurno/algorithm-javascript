@@ -834,3 +834,212 @@ console.log("last key = " + lastKey);
 <br/>
 
 **최단 경로 알고리즘을 구현 할 때 간선 갯수가 적은 인접 리스트가 유리**
+
+<br/>
+<br/>
+
+> ## 6. 정렬 알고리즘
+
+<br/>
+
+## 선택정렬 (selection-sort)
+
+<br/>
+
+- 선택정렬은 매 단계에서 가장 작은 원소를 선택해서 앞으로 보내는 정렬방법
+- 앞으로 보내진 원소는 더이상 위치가 변경되지 않음
+- 시간복잡도는 _O(N^2)_ 로 **비효율적**
+
+<br/>
+
+알고리즘 방식
+
+1. 각 단계에서 가장 작은 원소를 하나 선택
+2. 처리되지 않은 원소들 중 가장 앞의 원소와 교체
+
+<br/>
+<img src="md_resources/resource_14.png" width="400">
+<br/>
+
+```JS
+	// 선택정렬 함수
+	function selectionSort(array) {
+		for(let i = 0; i < array.length; i++) {
+			let minIndex = i; // 가장 작은 원소의 index
+
+			for(let j = i + 1; j < array.length; j++) {
+				if(array[j] < array[minIndex]) {
+					minIndex = j;
+				}
+			} // 최솟값 재지정
+
+			// 교체 (swap)
+			let temp = array[i];
+			array[i] = array[minIndex];
+			array[minIndex] = temp;
+		}
+	}
+```
+
+<br/>
+
+## 버블정렬 (bubble-sort)
+
+<br/>
+
+- 단순히 인접한 두 원소를 확인해 정렬이 안되어 있다면 서로 변경
+- 시간복잡도가 _O(N^2)_ 으로 비효율적인 정렬 알고리즘 중 하나
+
+<br/>
+
+알고리즘 방식
+
+1. 인접한 인덱스의 값과 비교
+2. 비교한 인덱스의 값을 서로 정렬
+
+<br/>
+<img src="md_resources/resource_15.png" width="400">
+<br/>
+
+```JS
+	// 버블정렬 함수
+	function bubbleSort(array) {
+		for(let i = array.length -1; 0 < i; i--) {
+			for(let j = 0; j < i; j++) {
+				if(array[j] < array[j + 1]) {
+					let tmp = array[i];
+					array[j] = array[j+1];
+					array[j+1] = tmp;
+				}
+			}
+		}
+	}
+
+```
+
+<br/>
+
+## 삽입정렬 (insert-sort)
+
+<br/>
+
+- 각 값을 적절한 위치에 집어넣는 정렬 기법
+
+<br/>
+
+알고리즘 방식
+
+1. 각 단계에서 현재 원소가 삽입 될 위치를 찾음
+2. 적절한 위치에 도달 할 때 까지 반복적으로 **왼쪽으로** 이동
+3. 삽입 정렬을 수행 할 때 첫 원소는 정렬이 되어 있다고 가정
+
+<br/>
+<img src="md_resources/resource_16.png" width="400">
+<br/>
+
+```JS
+	// 삽입정렬
+	function insertionSort(array) {
+		for(let i = 1; i < array.length; i++) {
+			for(let j = i; 0 < j; j--) {
+				// index j 부터 1까지 1씩 감소하며 반복
+				if(array[j] < array[j-1]) {
+					// 한칸씩 왼쪽으로 이동
+					// 교체 swap
+					let tmp = array[j];
+					array[j] = array[j-1];
+					array[j-1] = tmp;
+				} else break; // 자기보다 작은 데이터를 만나면 그 위치에서 멈춤
+			}
+		}
+	}
+
+```
+
+<br/>
+
+## 병합정렬 (merge-sort)
+
+<br/>
+
+- 병합 정렬은 전형적인 **분할정복(divide and conquer)** 알고리즘
+
+| 동작          | 방식                                               |
+| ------------- | -------------------------------------------------- |
+| 분할(divide)  | 큰 문제를 작은 부분문제로 분할                     |
+| 정복(conquer) | 작은 부분 문제를 각각 해결                         |
+| 조합(combine) | 해결한 부분 문제의 답을 이용해 다시 큰 문제를 해결 |
+
+<br/>
+
+알고리즘 방식
+
+1. 일반적으로 재귀함수를 이용해 구현
+2. 큰 문제를 작은 문제로 **분할 하는 방식이 거의 동일** 한 경우가 많기 때문에 재귀 함수 사용
+3. 더 이상 쪼갤 수 없을 때 까지 분할
+4. 재귀함수를 사용하기 떄문에 함수 호출 횟수가 많아짐 => 오버헤드(overhead) 로 이어짐
+5. 시간복잡도는 _O(logN)_ 을 보장하는 빠른 정렬 알고리즘
+
+<br/>
+<img src="md_resources/resource_17.png" width="400">
+<br/>
+<br/>
+
+정복의 동작방식
+
+- 각 부분을 이미 정렬된 것으로 봄
+- 각 부분의 배열에 대하여 첫째 원소부터 하나씩 확인
+- 총 원소가 N 개 일 때 _O(N)_ 의 시간 복잡도가 요구 됨
+
+<br/>
+
+<p>
+<img src="md_resources/resource_18.png" height="100"/>
+<img src="md_resources/resource_19.png" height="100"/>
+<p/>
+<br/>
+
+- 두개의 배열을 서로 비교하면서 작은 값을 순차적으로 넣어 새 배열을 만듦
+- 단, 여기에 사용 되는 두 배열은 **이미 정렬이 완료된 상태여야 함**
+- 정복 과정에서 일반적이 배열이 필요하단 점이 단점
+
+<br/>
+
+```JS
+	//병합 수행 함수
+	function merge(array, left, mid, right) {
+		let i = left; // 시작 값
+		let j = mid + 1;
+		let k = left; // 결과 배열의 인덱스
+
+		while(i <= mid && j <= right) { // 배열을 두개를 분할 divide 된 함수를 반복해서 병합
+			if(array[i] < array[j]) sorted[k++] = array[i++];
+			else sorted[k++] = array[j++];
+		}
+
+		if (mid < i) { // 왼쪽 배열에 대해 처리가 끝난 경우
+			for(; j <= right; j++) {
+				sorted[k++] = array[j]; // 합쳐질 배열을 conquer
+			}
+		} else { // 오른쪽 배열에 대해 처리가 끝난 경우
+			for(; i <= mid; i++) {
+				sorted[k++] = array[i];
+			}
+		}
+
+		for(let x = left; x <= right; x++) {
+			array[x] = sorted[x]; // 정렬된 배열결과를 원본 배열에 반영
+		}
+	}
+
+	function mergeSort(array, left, right) { // 병합정렬 함수
+		// 원소가 한개인 경우 배열이 완료된 상태로 이해 가능
+		if(left < right) {
+			// 원소가 두개 이상 일 시
+			let mid = parseInt((left + right) / 2); // 두개의 부분으로 배열 분할
+			mergeSort(array, left, mid); // 왼쪽 부분 정복 conquer
+			mergeSort(array, mid + 1, right); // 오른쪽 부분 정복 conquer
+			merge(array, left, mid, right); // 분할 되었던 두개의 배열을 하나로 합침
+		}
+	}
+```
