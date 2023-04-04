@@ -1087,3 +1087,26 @@ console.log("last key = " + lastKey);
 
 	console.log(array); // 1,2,3,5,7,8,9,15,21
 ```
+
+<br/>
+
+객체에 대하여 원하는 기준으로 오름차순 정리
+
+<br/>
+
+```JS
+	let array = [
+		{name : "홍길동", score: 90},
+		{name : "김철수", score: 85},
+		{name : "박영희", score: 97},
+	]
+
+	function compare(a, b) {
+		return a.score - b.score;
+	}
+
+	array.sort(compare);
+
+	console.log(array);
+	// [{name : "박영희", score: 97}, {name : "홍길동", score: 90}, {name: "김철수", score: 85}]
+```
