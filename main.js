@@ -3,30 +3,28 @@ const filePath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
 let input = fs.readFileSync(filePath).toString().split("\n");
 
 let cycle = Number(input[0]);
-let array = [];
+let array = input[1].split(" ").map(Number);
 
-for (let i = 1; i <= cycle; i++) {
-  let word = input[i];
-  array.push(word);
-}
+let newArray = [...new Set(array)]; // set 으로 풀어쓴 후 초기화
 
-array = [...new Set(array)]; // 중복 값 Set 으로 정렬 후 다시 ... 로 풀어서 초기화
+// console.log(newArray);
 
-// console.log(array);
-
-array.sort((a, b) => {
-  if (a.length != b.length) return a.length - b.length;
-  else {
-    if (a < b) return -1;
-    else if (a > b) return 1;
-    else return 0;
-  }
+newArray.sort((a, b) => {
+  return a - b;
 });
+
+// console.log(newArray);
 
 let logs = "";
 
-for (let i = 0; i < array.length; i++) {
-  logs += `${array[i]}\n`;
+let numbers = new Map();
+
+for (let i = 0; i < newArray.length; i++) {
+  numbers.set(newArray[i], i); // map 으로 key 와 value 값으로 세팅
+}
+
+for (x of array) {
+  logs += `${numbers.get(x)} `;
 }
 
 console.log(logs);
