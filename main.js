@@ -17,8 +17,8 @@ for (let i = 1; i <= cycle; i++) {
 }
 
 array.sort((a, b) => {
-  if (a.x != b.x) return a.x - b.x;
-  else return a.y - b.y;
+  if (a.y != b.y) return a.y - b.y;
+  else return a.x - b.x;
 });
 
 array.forEach((value) => {
