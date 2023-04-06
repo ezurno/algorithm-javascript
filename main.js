@@ -2,16 +2,18 @@ const fs = require("fs");
 const filePath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
 let input = fs.readFileSync(filePath).toString().split("\n");
 
-let numbers = input[0].split("").map(Number);
+let [cycle, money] = input[0].split(" ").map(Number);
+let array = [];
 
-numbers.sort((a, b) => {
-  return b - a;
-});
-
-let logs = "";
-
-for (value of numbers) {
-  logs += `${value}`;
+for (let i = 1; i <= cycle; i++) {
+  array.push(Number(input[i]));
 }
 
-console.log(logs);
+let counter = 0;
+
+for (let i = cycle - 1; 0 <= i; i--) {
+  counter += parseInt(money / array[i]);
+  money %= array[i];
+}
+
+console.log(counter);
