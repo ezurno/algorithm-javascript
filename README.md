@@ -198,6 +198,23 @@ fill() 함수를 사용해 배열을 간단하게 초기화 할 수 있다.
 ```
 
 <br/>
+<br/>
+
+**Map**
+
+`Map` 은 데이터 값을 key 와 value 로 가진다.
+
+```JS
+	let numbers = new Map();
+	for (let i = 0; i < newArray.length; i++) {
+	numbers.set(newArray[i], i); // map 으로 key 와 value 값으로 세팅
+	}
+	for (x of array) {
+	logs += `${numbers.get(x)} `;
+	}
+```
+
+<br/>
 
 ---
 
