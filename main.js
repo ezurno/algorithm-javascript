@@ -2,21 +2,23 @@ const fs = require("fs");
 const filePath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
 let input = fs.readFileSync(filePath).toString().split("\n");
 
-// 최솟값을 구하려면 최대한 많은 수를 뺄셈에 맞춰 괄호안에 넣어야 함
-//  a - (b + c) - (d + e + f) ...
+let sugar = Number(input[0]);
+let five = 0;
+let three = 0;
+let sum = -1;
 
-let delMin = input[0].split("-");
+let array = [0, 1, 2, 4, 7];
 
-// console.log(delMin);
+while (!array.find((value) => value == sugar)) {
+  if (sugar % 5 == 0) {
+    five = sugar / 5;
+    sum = five + three;
 
-let logs = 0;
+    break;
+  } else {
+    sugar -= 3;
+    three++;
+  }
+} // 5로 나눴을 때 값이 나누어떨어지지 않았을 시 3을 빼주면서 다시 나눈다.
 
-for (let i = 0; i < delMin.length; i++) {
-  let target = delMin[i].split("+").map(Number);
-  let sum = target.reduce((a, b) => a + b);
-
-  if (i == 0) logs += sum;
-  else logs -= sum;
-}
-
-console.log(logs);
+console.log(sum);
