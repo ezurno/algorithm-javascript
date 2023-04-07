@@ -2,23 +2,22 @@ const fs = require("fs");
 const filePath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
 let input = fs.readFileSync(filePath).toString().split("\n");
 
-let sugar = Number(input[0]);
-let five = 0;
-let three = 0;
-let sum = -1;
+let [A, B] = input[0].split(" ").map(Number);
+let flag = false;
+let counter = 1;
 
-let array = [0, 1, 2, 4, 7];
-
-while (!array.find((value) => value == sugar)) {
-  if (sugar % 5 == 0) {
-    five = sugar / 5;
-    sum = five + three;
-
+while (A <= B) {
+  if (A == B) {
+    flag = true;
     break;
-  } else {
-    sugar -= 3;
-    three++;
   }
-} // 5로 나눴을 때 값이 나누어떨어지지 않았을 시 3을 빼주면서 다시 나눈다.
 
-console.log(sum);
+  if (B % 2 == 0) {
+    B = parseInt(B / 2);
+  } else if (B % 10 == 1) {
+    B = parseInt(B / 10);
+  } else break;
+  counter++;
+}
+
+console.log(flag ? counter : -1);
