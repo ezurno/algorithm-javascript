@@ -10,14 +10,12 @@ for (let i = 1; i <= communicate; i++) {
 }
 
 array.sort((a, b) => {
-  if (a.start != b.start) {
+  if (a.end != b.end) {
     return a.end - b.end;
   } else {
     return a.start - b.start;
   }
 });
-
-console.log(array);
 
 let current = 0;
 let counter = 1;
