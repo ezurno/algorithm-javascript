@@ -2,29 +2,20 @@ const fs = require("fs");
 const filePath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
 let input = fs.readFileSync(filePath).toString().split("\n");
 
-let communicate = Number(input[0]);
-let array = [];
-for (let i = 1; i <= communicate; i++) {
-  let [start, end] = input[i].split(" ").map(Number);
-  array.push({ start: start, end: end });
-}
+let data = input[1].split(" ").map(Number);
+let result = 0;
+let arrow = new Array(1000001).fill(0); // 각 높이의 화살 갯수
 
-array.sort((a, b) => {
-  if (a.end != b.end) {
-    return a.end - b.end;
+for (let height of data) {
+  if (0 < arrow[height]) {
+    // 해당 높이에 이미 쏜 화살이 있다면
+    arrow[height] -= 1; // 해당 화살이 아래로 떨어지므로 하나 뺌
+    arrow[height - 1] += 1; // 한칸 밑으로 떨어진 화살
   } else {
-    return a.start - b.start;
-  }
-});
-
-let current = 0;
-let counter = 1;
-
-for (let i = 1; i < communicate; i++) {
-  if (array[current].end <= array[i].start) {
-    current = i;
-    counter += 1;
+    // 해당 높이에 화살이 없다면
+    arrow[height - 1] += 1;
+    result += 1; // 화살 수 세기
   }
 }
 
-console.log(counter);
+console.log(result);
