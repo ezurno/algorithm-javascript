@@ -2,46 +2,30 @@ const fs = require("fs");
 const filePath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
 let input = fs.readFileSync(filePath).toString().split("\n");
 
-function nearestSquare(x) {
-  let i = 1;
-  while (2 ** i <= x) {
-    i += 1;
+let N = Number(input[0]);
+let array = input[1].split(" ").map(Number);
+let money = Number(input[2]);
+
+let start = 1; // 이진탐색으로 상한선을 찾기 위해 최소 예산 1
+let end = array.reduce((a, b) => Math.max(a, b)); // 최대 값을 end로 잡음
+
+let result = 0; // 최종 값을 담을 변수
+while (start <= end) {
+  let mid = parseInt((start + end) / 2); // 상한선
+  let total = 0;
+
+  for (target of array) {
+    total += Math.min(target, mid); // 가장 값이 작은걸 기준으로 total 총 예산을 계산
   }
 
-  return i - 1;
-} // x 보다 작거나 같으면서 가장 가까운 2^i를 찾는 함수
-
-let [length, width, height] = input[0].split(" ").map(Number);
-let N = Number(input[1]);
-let cubes = new Array(20).fill(0); // 10의 20승
-
-for (let i = 2; i < N + 2; i++) {
-  let [A, B] = input[i].split(" ").map(Number);
-  cubes[A] = B; // 해당 하는 사이즈에 맞는 큐브 규격에 갯수를 넣음
+  if (total <= money) {
+    // 총 합해진 예산이 money 보다 적을 때 상한선을 올림
+    start = mid + 1;
+    result = mid; // 예산을 result 에 저장
+  } else {
+    // 예산이 더 클 시 상한액을 감소 시키기
+    end = mid - 1;
+  }
 }
 
-let minSize = [length, width, height].reduce((a, b) => Math.min(a, b));
-// 세 길이 중 가장 작은 길이를 기준
-let size = nearestSquare(minSize); // 그 값으로 가장 유사한 2^i 를 찾음
-
-let result = 0;
-let used = 0; // 사용한 큐브의 갯수
-
-for (let i = size; 0 <= i; i--) {
-  // 최대 크기의 큐브부터
-  used *= 8;
-  current = 2 ** i; // 현재 정뮥면체의 규브 길이
-
-  let required =
-    parseInt(length / current) *
-      parseInt(width / current) *
-      parseInt(height / current) -
-    used; // 채워넣어야 할 큐브의 갯수 계산
-
-  let usage = Math.min(required, cubes[i]); // 이번 단계에서 넣을 수 있는 큐브의 수
-  result += usage;
-  used += usage;
-}
-
-if (used == length * height * width) console.log(result);
-else console.log(-1);
+console.log(result);
