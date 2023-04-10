@@ -1152,3 +1152,76 @@ console.log("last key = " + lastKey);
 1. **방법 고안하기** : 현재 상황에서 어떤 것을 선택 할지 고안
 2. **정당성 확인하기** : 자신이 고안한 알고리즘이 **항상 최적의 해를 보장하는지** 확인
    ex) 거스름돈 문제에서 단위가 배수관계 인지
+
+<br/>
+<br/>
+
+> ## 7. 이진탐색 알고리즘
+
+<br/>
+
+- **순차 탐색** 은 앞에서 부터 차례대로 탐색, **이진 탐색** 은 탐색범위를 절반씩 좁혀가며 탐색
+- 순차탐색은 시간복잡도가 _O(N)_ 이지만 이진 탐색은 그보다 빠른 _O(logN)_ 이다.
+
+<br/>
+
+동작방식
+
+<br/>
+<img src="md_resources/resource_20.png" width="400"/>
+<br/>
+
+- 이상적인 경우, 매 단계마다 탐색범위가 절반으로 줄어들기 때문에 시간 복잡도가 _O(logN)_ 이다.
+- 주로 매우 넓은 범위를 탐색해야 하는 경우에서 사용 함
+
+<br/>
+
+이진탐색 코드를 두가지 형태로 만들 수 있다.
+
+<br/>
+
+```JS
+	// 재귀함수로 구현
+	function binarySearch(array, target, start, end) {
+		if(start > end) return -1; // start 가 end 보다 클 수 없음
+		let mid = parseInt((start + end) / 2); // mid 값 생성
+		if(array[mid] === target) return mid; // 해당 index mid 값이 target 과 일치 할때 그 undex 값을 리턴
+		else if (array[mid] > target) return binarySearch(array, target, start, mid - 1); // array[mid] 값이 더 클 시 target 값은 왼쪽에 있으므로 mid-1 을 end 기점으로 재귀 함수 호출
+		else return binarySearch(array, target, mid + 1, end);
+	}
+
+	// 원소갯수 n 과 찾고자 하는 값 target
+	let n  = 10;
+	let target = 7;
+	array = [1, 3, 5, 7, 9, 11 ,13, 15, 17, 19];
+
+	// 이진 탐색 수행 결과 출력
+	let result = binarySearch(array, target, 0, n-1);
+	if (result == -1) console.log("원소가 존재하지 않습니다.");
+	else console.log(`${result + 1} 번째 원소 입니다.`);
+```
+
+<br/>
+
+```JS
+	function binarySearch(array, target, start, end) {
+		while(start <= end) {
+			let mid = parseInt((start + end) / 2);
+			if(array[mid] == target) return mid; // 일치하는 값을 찾았을 시 값 반환
+			else if(array[mid] > target) {
+				end = mid - 1;
+			} else start = mid + 1;
+		}
+		return -1; // while 조건문에 불일치 할 시 return -1
+	}
+
+	// 원소 갯수 n 과 찾고자 하는 ㄱ밧 target
+	let n = 10;
+	let target = 7;
+	array = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19];
+
+	// 이진 탐색 수행 결과 출력
+	let result = binarySearch(array, target, 0, n-1);
+	if (result == -1) console.log("원소가 존재하지 않습니다.");
+	else console.log(`${result + 1} 번째 원소 입니다.`);
+```
