@@ -1225,3 +1225,76 @@ console.log("last key = " + lastKey);
 	if (result == -1) console.log("원소가 존재하지 않습니다.");
 	else console.log(`${result + 1} 번째 원소 입니다.`);
 ```
+
+<br/>
+<br/>
+
+## 이진탐색을 사용해 정렬된 배열에서 특정 원소 갯수 구하기
+
+- 간혹 값이 큰 배열에서 특정한 값의 갯수를 구하는 방식이 코딩테스트에 등장
+- `lowerBound()` 함수와 `upperBound()` 함수를 사용해 해결
+
+<br/>
+<img src="md_resources/resource_21.png" width="400"/>
+<br/>
+<br/>
+
+`lowerBound(array, x)` : 정렬된 순서를 유지하면서 배열 array 에 x 를 넣을 가장 왼쪽 index 반환
+
+`upperBound(array, x)` : 정렬된 순서를 유지하면서 배열 array 에 x 를 넣을 가장 오른쪽 index 반환
+
+<br/>
+
+**따라서 lowerBound() 함수와 upperBound() 함수를 적절히 이용하면 5의 갯수를 구할 수 있다.**
+
+<br/>
+
+```JS
+	function lowerBound(array, target, start, end) {
+		while(start < end) {
+			let mid = parseInt((start + end) / 2);
+			if(target <= array[mid]) {
+				end = mid;
+			}
+			else start = mid + 1;
+		}
+
+		return end;
+	}
+
+	function upperBound(array, target, start, end) {
+		while(start < end) {
+			let mid = parseInt((start + end) / 2);
+			if(target < array[mid]) {
+				end = mid;
+			}
+			else start = mid + 1;
+		}
+
+		return end;
+	}
+```
+
+<br/>
+
+해당하는 상단의 두 함수를 이용해 활용 가능
+
+<br/>
+
+```JS
+	function countByRange(array, leftValue, rightValue) {
+		// 값이 [leftValue, rightValue] 인 데이터 갯수를 반환하는 함수
+		// upperBound() 와 lowerBound() 함수는 end 변수의 값을 배열의 길이로 설정해놨음 **주의
+		let rightIndex = upperBound(array, rightValue, 0, array.length);
+		let leftIndex = lowerBound(array, leftValue, 0, array.length);
+
+		return rightIndex - leftIndex;
+	}
+
+	// 배열 선언
+	let array = [1, 2, 3, 3, 3, 3, 4, 4, 8, 9];
+	// 값이 4 인 데이터 갯수 출력
+	console.log(countByRange(array, 4, 4));
+	// 값이 [-1, 3] 범위에 있는 데이터 개수 출력
+	console.log(countByRange(array, -11, 3));
+```
