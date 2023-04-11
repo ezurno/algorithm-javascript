@@ -2,32 +2,33 @@ const fs = require("fs");
 const filePath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
 let input = fs.readFileSync(filePath).toString().split("\n");
 
-let [N, M] = input[0].split(" ").map(Number);
-let trees = input[1].split(" ").map(Number);
+let [have, need] = input[0].split(" ").map(Number);
+let array = [];
 
-let start = 0;
-let end = trees.reduce((a, b) => Math.max(a, b));
+for (let i = 1; i <= have; i++) {
+  array.push(Number(input[i]));
+}
 
-let result = 0;
+let start = 1;
+let end = array.reduce((a, b) => Math.max(a, b));
 
+let count = 0;
 while (start <= end) {
   let mid = parseInt((start + end) / 2);
-  let total = 0;
+  let cable = new Array();
 
-  for (let tree of trees) {
-    if (mid < tree) {
-      // 톱보다 나무가 클때
-      total += tree - mid; // 잘린 값을 추가
-    }
+  for (line of array) {
+    cable.push(parseInt(line / mid));
   }
 
-  if (total < M) {
-    // 깎을 나무가 모자랄 때
+  let sum = cable.reduce((a, b) => a + b);
+
+  if (sum < need) {
     end = mid - 1;
   } else {
-    result = mid;
     start = mid + 1;
+    count = mid;
   }
 }
 
-console.log(result);
+console.log(count);
