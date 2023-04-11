@@ -1320,3 +1320,14 @@ console.log("last key = " + lastKey);
 - 최적화 문제를 **결정문제("예", "아니오") 로 바꾸어 해결하는 기법**
 - ex) 특정 조건을 만족하는 가장 알맞은 값을 빠르게 찾는 최적화 문제
 - 일반적으로 이와 같은 파라매트릭 서치는 **이진 탐색**으로 해결 가능
+
+<br/>
+
+## 가장 긴 증가하는 부분 수열 (Longest Increasing Subsequance, LIS)
+
+<br/>
+<p>
+<img src="md_resources/resource_23.png" width="350"/>
+<img src="md_resources/resource_24.png" width="350"/>
+<p/>
+<br/>
