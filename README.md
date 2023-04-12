@@ -1331,3 +1331,92 @@ console.log("last key = " + lastKey);
 <img src="md_resources/resource_24.png" width="350"/>
 <p/>
 <br/>
+
+<br/>
+<br/>
+
+> ## 8. 백트래킹 알고리즘
+
+<br/>
+
+- 일반적으로 그래프, 트리의 모든 원소를 **완전 탐색** 하기 위한 목적으로 사용하는 알고리즘
+- **DFS**처럼 재귀함수를 이용해 만듦
+- 백트래킹은 DFS 와 비슷하지만 DFS 처럼 단순한 완전탐색이 아닌 **조건에 따른 유망 노드로 이동**
+
+<br/>
+
+백트래킹을 공부하기 전, 일반적으로 그래프 표현 방식을 알아두는 편이 좋다.
+
+<br/>
+<img src="md_resources/resource_25.png" width="400"/>
+<br/>
+<br/>
+
+해당 백트래킹의 대표적인 예제로, N-Queen 문제가 있으므로 예시로 이용해 설명
+
+<br/>
+<p>
+<img src="md_resources/resource_26.png" height="180"/>
+<img src="md_resources/resource_27.png" height="180"/>
+<p/>
+<br/>
+
+- 예를 들어 N 이 8
+- 64개의 위치에 8개의 Queen을 놓는 모든 조합의 수는 _Combination(64, 8)_
+- 따라서 단순히 모든 경우의 수를 전부 고려한다면 시간초과가 날 가능성이 높음
+
+<br/>
+<img src="md_resources/resource_28.png" width="400"/>
+<br/>
+
+이전까지 놓였던 Queen 과 상충되지 않는 **조건을 만족하는 위치에서만 재귀함수 호출**
+
+<br/>
+
+```JS
+	// 큰 틀로 보면 이렇게 구성되어 있다.
+	function recursive() {
+		if 종료조건을 만족한다면 {
+			처리;
+		}
+
+		for(자식 노드를 하나씩 확인 하며) {
+			if 임의의 노드가 조건을 만족한다면 {
+				자식노드 방문 처리;
+				재귀함수 호출;
+				자식 노드 방문 처리 해제;
+			}
+		}
+	}
+```
+
+따라서 해당 N-Queen 문제를 해결하려면
+
+```JS
+	let n = 0; // 전체 맵 크기
+	let queens = []; // 현재 체스판에 놓인 퀸의 위치정보
+
+	function possible(x, y) { // x, y 자리에 queen 을 놓을 수 있는지 확인
+		for(let [a, b] of queens) { // 현재 놓은 queen 들의 자리 확인
+			if(a == x || b == y) return false; // 행이나 열이 같다면 x
+			if (Math.abs(a - x) == Math.abs(b - y)) return false; // 대각선에 위치한 경우 x
+		}
+
+		return true; // 모든 조건을 통과할 시 return true
+	}
+
+	let count = 0;
+	function dfs(row) {
+		if(row == n) count += 1; // queen 을 n 개 배치 할 수 있는 경우 count
+		for(let i = 0; i < n; i++) {
+			if(!possible(row, i)) continue; // 현재 위치에 놓을 수 없으면 무시
+			queens.push([row, i]); // 현재 위치에 퀸을 놓기
+
+			dfs(row + 1); // 재귀함수 호출
+			queens.pop(); // 현재 위치에 놓인 퀸 제거
+		}
+	}
+
+	dfs(0);
+	console.log(count);
+```
