@@ -13,21 +13,20 @@ for (let i = 1; i <= N; i++) {
 let selected = [];
 
 let log = "";
-function dfs(array, depth) {
+function dfs(array, depth, start) {
   if (M == depth) {
     let result = [];
-    for (let i of selected) result.push(i);
+    for (let i of selected) result.push(array[i]);
     for (let x of result) log += `${x} `;
     log += "\n";
     return;
   }
 
-  for (let i = 1; i <= array.length; i++) {
+  for (let i = start; i < array.length; i++) {
     selected.push(i);
-    dfs(array, depth + 1);
+    dfs(array, depth + 1, i);
     selected.pop();
   }
 }
-
-dfs(array, 0);
+dfs(array, 0, 0);
 console.log(log);
