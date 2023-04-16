@@ -4,47 +4,41 @@ let input = fs.readFileSync(filePath).toString().split("\n");
 
 let N = Number(input[0]);
 let array = [];
-let visited = new Array(N).fill(false);
 
-for (let i = 0; i <= N; i++) array.push([0]);
 for (let i = 1; i <= N; i++) {
-  let line = input[i].split(" ").map(Number); // 각 라인 값 찢어서 다시 넣기
-  for (let j = 0; j < N; j++) array[i].push(line[j]);
+  let [x, y] = input[i].split(" ").map(Number);
+  array.push([x, y]);
 }
 
+// console.log(array);
+
+let visited = new Array(N).fill(false);
 let result = [];
-let minValue = 1e9;
+let answer = 1e9;
 
-function dfs(depth) {
-  // 1에서부터 출발 하므로 2부터 n 까지
-  if (depth == N - 1) {
-    let totalCost = 0;
-    let current = 1; // 1번 노드에서 출발
+function dfs(depth, start) {
+  if (1 <= depth) {
+    let totalX = 1;
+    let totalY = 0;
 
-    for (let i = 0; i < N - 1; i++) {
-      let next = result[i];
-      let cost = array[current][next];
-
-      if (cost == 0) return;
-      totalCost += cost;
-      current = next;
+    for (let i of result) {
+      let [x, y] = array[i];
+      totalX *= x;
+      totalY += y;
     }
 
-    let cost = array[current][1]; // 다시 1로 돌아오는 것이 필수
-    if (cost == 0) return;
-    totalCost += cost;
-    minValue = Math.min(minValue, totalCost);
+    answer = Math.min(answer, Math.abs(totalX - totalY));
   }
 
-  for (let i = 2; i <= N; i++) {
+  for (let i = start; i < N; i++) {
     if (visited[i]) continue;
-    result.push(i);
     visited[i] = true;
-    dfs(depth + 1);
-    result.pop();
+    result.push(i);
+    dfs(depth + 1, i + 1);
     visited[i] = false;
+    result.pop();
   }
 }
 
-dfs(0);
-console.log(minValue);
+dfs(0, 0);
+console.log(answer);
