@@ -2,31 +2,39 @@ const fs = require("fs");
 const filePath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
 let input = fs.readFileSync(filePath).toString().split("\n");
 
-let N = Number(input[0]);
-let chess = []; // queen 이 놓인 위치를 적는 배열
-let counter = 0;
+let [R, C] = input[0].split(" ").map(Number);
+let array = [];
+let visited = new Array(26).fill(false); // 알파벳이 26글자이기 때문
+// Set() 을 사용하고 싶지만 set을 사용하면 시간 초과가 남
 
-function possible(x, y) {
-  for (let [a, b] of chess) {
-    if (a == x || b == y) return false;
-    // 해당하는 chess 판에 놓인 queen 의 위치 중 x, y 축이 같을 시 false
-    if (Math.abs(a - x) == Math.abs(b - y)) return false;
-    // 대각선에 놓여있을 시 false
+for (let i = 1; i <= R; i++) array.push(input[i]);
+
+let moveX = [-1, 1, 0, 0]; // 상하좌우
+let moveY = [0, 0, -1, 1];
+let max = 0;
+
+function dfs(depth, x, y) {
+  max = Math.max(max, depth);
+  for (let i = 0; i < 4; i++) {
+    // 상하좌우 4방향 움직임
+    let currentX = x + moveX[i];
+    let currentY = y + moveY[i];
+
+    if (isValid(currentX, currentY)) {
+      // 해당 배열 범위 내에 있는지
+      if (visited[array[currentX][currentY].charCodeAt() - 65] === false) {
+        visited[array[currentX][currentY].charCodeAt() - 65] = true;
+        dfs(depth + 1, currentX, currentY);
+        visited[array[currentX][currentY].charCodeAt() - 65] = false;
+      }
+    }
   }
-
-  return true;
 }
+visited[array[0][0].charCodeAt() - 65] = true; // (0, 0) 에서 출발
+dfs(1, 0, 0);
+console.log(max);
 
-function dfs(row) {
-  if (row == N) counter += 1;
-
-  for (let i = 0; i < N; i++) {
-    if (!possible(row, i)) continue; // 조건을 만족하지 않았을 시
-    chess.push([row, i]); // 조건을 만족할 시 queen 을 놓음
-    dfs(row + 1); // 다음 행에 배치 (재귀함수 호출)
-    chess.pop();
-  }
+function isValid(x, y) {
+  if (x < 0 || R <= x || y < 0 || C <= y) return false;
+  else return true;
 }
-
-dfs(0);
-console.log(counter);
