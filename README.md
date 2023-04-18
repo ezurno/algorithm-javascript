@@ -1523,3 +1523,6 @@ DFS가 사용되는 예시
 	// 정의된 DFS 함수 호출
 	dfs(graph, 1, visited);
 ```
+
+<br/>
+<img src="md_resources/resource_30.png" width="400"/>
