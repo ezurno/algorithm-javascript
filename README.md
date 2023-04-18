@@ -1454,3 +1454,72 @@ console.log("last key = " + lastKey);
 	console.log();
 	}
 ```
+
+<br/>
+<br/>
+
+> ## 9. DFS (깊이 우선 탐색)
+
+<br/>
+
+- 탐색이란 많은 양의 데이터 중에서 **원하는 데이터를 찾는 과정**을 의미
+- 대표적인 그래프 탐색으로는 `DFS` 와 `BFS` 가 있음
+- 말 그대로 자료를 **찾는** 알고리즘
+- `DFS 는 Stack 형 자료구조를 사용함 (First In Last Out)
+
+<br/>
+<br/>
+<img src="md_resources/resource_29.png" width="400"/>
+<br/>
+
+<br/>
+<hr/>
+
+DFS의 동작 방식
+
+1. 시작노드를 스택에 넣고 방문처리
+2. 마지막에 들어온 노드에 방문하지 않은 인접노드가 있는지 확인
+3. 있다면, 방문하지 않은 노드를 삽입 후 방문 처리
+4. 없다면, 마지막 (현재) 노드를 스택에서 추출
+5. 더 이상 반복 할 수 없을때 까지 반복
+
+<br/>
+<br/>
+
+DFS가 사용되는 예시
+
+1. 더 짧은 코드로 간결히 해야 하는 경우
+2. 큐 라이브러리를 사용할 수 없는 경우
+3. 트리의 순회, 점화식 구현 등 (DFS) 구조에 특화된 문제인 경우
+4. 트리에서 최단거리 탐색을 찾는 경우
+
+<br/>
+
+```JS
+	//DFS 매서드 정의
+	function dfs(graph, v, visited) {
+		// 현재노드를 방문 처리
+		visited[v] = true;
+		console.log(v);
+		// 현재노드와 연결된 다른 노드를 재귀적으로 방문
+		for(let i of graph[v]) {
+			if(!visited[v]) {
+				dfs(graph, i, visited);
+			}
+		}
+	}
+
+	graph = [
+		[],
+		[2, 3, 4],
+		[1],
+		[1, 5, 6],
+		[1, 7]
+	];
+
+	// 각 노드 방문 visited 정보
+	visited = new Array(5).fill(false);
+
+	// 정의된 DFS 함수 호출
+	dfs(graph, 1, visited);
+```
