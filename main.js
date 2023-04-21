@@ -3,37 +3,55 @@ const { connected } = require("process");
 const filePath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
 let input = fs.readFileSync(filePath).toString().split("\n");
 
-let N = Number(input[0]); // 정점 수 N
-let M = Number(input[1]); // 간선 수 M
-let graph = [];
+let testCases = Number(input[0]);
+let line = 1;
 
-for (let i = 1; i <= N; i++) graph[i] = []; // 1부터 N 개의 빈 배열을 넣어줌
-for (let i = 2; i <= M + 1; i++) {
-  let [x, y] = input[i].split(" ").map(Number);
-  graph[x].push(y); // x 에 연결 된 y 입력
-  graph[y].push(x); // y 에 연결 된 x 입력
-}
+for (let TC = 0; TC < testCases; TC++) {
+  let [X, Y, A] = input[line].split(" ").map(Number);
+  // x 는 x 축, y는 y 축, a 는 배추 갯수
 
-// console.log(graph);
-// 각 노드 번호에 연결 된 값, 일부러 index 0 는 빈 배열로 제외 함
+  let graph = []; // 각 값에 해당하는 그래프 생성
 
-let counter = 0;
-let visited = new Array(N + 1).fill(false);
-// 방문여부를 알아야 하므로, N+1 인 이유는 0 을 비워두고 하기 때문
+  for (let i = 0; i < Y; i++) {
+    graph[i] = new Array(X);
+  }
 
-function dfs(node) {
-  visited[node] = true; // 현재 노드에 대해 방문 처리
-  counter += 1;
+  // console.log(graph);
 
-  for (let connected of graph[node]) {
-    // 현재 노드에 연결 된 노드 방문
-    if (!visited[connected]) {
-      dfs(connected); // 만약 방문한 노드가 다른 노드와 연결이 더 되어 있을 경우
-      // 재귀함수로 재방문
+  for (let i = 1; i <= A; i++) {
+    let [y, x] = input[line + i].split(" ").map(Number);
+    graph[x][y] = 1; // 배추의 위치를 1로 표현
+  }
+
+  // console.log(graph);
+
+  let counter = 0;
+
+  for (let i = 0; i < Y; i++) {
+    for (let j = 0; j < X; j++) {
+      if (dfs(graph, Y, X, i, j)) counter += 1; // 만약 배추탐색이 완료되면 갯수 ++
     }
   }
+
+  line += A + 1;
+  console.log(counter);
 }
 
-dfs(1); // 1번 노드부터 출발 하므로
+function dfs(graph, Y, X, i, j) {
+  if (i < 0 || j < 0 || Y <= i || X <= j) {
+    return false;
+  }
 
-console.log(counter - 1); // 1번 노드도 포함해서 센 값이기 때문에 1 감소
+  if (graph[i][j] == 1) {
+    graph[i][j] = -1;
+
+    dfs(graph, Y, X, i - 1, j);
+    dfs(graph, Y, X, i, j - 1);
+    dfs(graph, Y, X, i + 1, j);
+    dfs(graph, Y, X, i, j + 1);
+
+    return true;
+  }
+
+  return false;
+}
