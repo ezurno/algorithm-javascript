@@ -1,6 +1,6 @@
 const fs = require("fs");
 const filePath =
-  process.platform === "linux" ? "/dev/stdin" : "20231024/input.txt";
+  process.platform === "linux" ? "/dev/stdin" : "20231024/input_11501.txt";
 let input = fs.readFileSync(filePath).toString().split("\n");
 
 const TC = input.shift();
